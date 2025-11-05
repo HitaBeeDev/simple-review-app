@@ -1,0 +1,26 @@
+<div>
+  <h1>List of reviews</h1>
+  <button [routerLink]="['']">home</button>
+
+  <div *ngIf="reviews?.length; else empty">
+    <ul>
+      <li *ngFor="let review of reviews; trackBy: trackById">
+        <div>
+          <p>
+            <strong>{{ review.authorName }}</strong>
+          </p>
+          <p>{{ review.comment }}</p>
+          <p>Rating: {{ review.rating }}</p>
+          <p>{{ review.email }}</p>
+          <p>Product: {{ review.product }}</p>
+          <p>Recommend: {{ review.recommend ? 'Yes' : 'No' }}</p>
+          <p>{{ review.createdAt | date : 'medium' }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #empty>
+    <p>No reviews yet</p>
+  </ng-template>
+</div>

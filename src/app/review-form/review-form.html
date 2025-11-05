@@ -1,0 +1,69 @@
+<div>
+  <h1>create a review</h1>
+
+  <button [routerLink]="['']">home</button>
+
+  <div>
+    <label>Author Name</label>
+    <input class="border" type="text" placeholder="Author Name" [(ngModel)]="newAuthorName" />
+
+    <label>Review comment</label>
+    <input class="border" type="text" placeholder="Review comment" [(ngModel)]="newComment" />
+
+    <label>Rating</label>
+    <input class="border" type="number" placeholder="Rating" [(ngModel)]="newRating" />
+
+    <label>mail</label>
+    <input class="border" type="email" placeholder="mail" [(ngModel)]="newEmail" />
+
+    <label>product</label>
+    <input
+      class="border"
+      type="text"
+      placeholder="choose a product select"
+      [(ngModel)]="newProduct"
+    />
+
+    <label>would recommend?</label>
+    <input class="border" type="checkbox" [(ngModel)]="newRecommend" name="recommend" />
+
+    <button (click)="submitReview()">Preview</button>
+  </div>
+
+  <div *ngIf="isPreview && draftReview" class="preview-wrap">
+    <h2>Your comment will be shown like this:</h2>
+
+    <div class="bg-red-500 p-3 text-white rounded">
+      <p><strong>Your name:</strong> {{ draftReview.authorName }}</p>
+      <p><strong>Your review:</strong> {{ draftReview.comment }}</p>
+      <p><strong>Your rating:</strong> {{ draftReview.rating }}</p>
+      <p><strong>Your mail:</strong> {{ draftReview.email }}</p>
+      <p><strong>Your product:</strong> {{ draftReview.product }}</p>
+      <p><strong>Would recommend?</strong> {{ draftReview.recommend ? 'Yes' : 'No' }}</p>
+      <p><strong>Submitted at:</strong> {{ draftReview.createdAt | date : 'medium' }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="danger" (click)="deleteDraft()">Delete</button>
+      <button class="primary" (click)="confirmDraft()">Confirm</button>
+    </div>
+  </div>
+
+  <div *ngIf="isSavedMessageVisible && lastSubmittedReview" class="submitted-wrap">
+    <p class="text-green-700 font-semibold">✅ Your comment was saved.</p>
+
+    <div class="bg-green-500 p-3 text-white rounded">
+      <p><strong>Your name:</strong> {{ lastSubmittedReview.authorName }}</p>
+      <p><strong>Your review:</strong> {{ lastSubmittedReview.comment }}</p>
+      <p><strong>Your rating:</strong> {{ lastSubmittedReview.rating }}</p>
+      <p><strong>Your mail:</strong> {{ lastSubmittedReview.email }}</p>
+      <p><strong>Your product:</strong> {{ lastSubmittedReview.product }}</p>
+      <p><strong>Would recommend?</strong> {{ lastSubmittedReview.recommend ? 'Yes' : 'No' }}</p>
+      <p><strong>Submitted at:</strong> {{ lastSubmittedReview.createdAt | date : 'medium' }}</p>
+    </div>
+
+    <button [routerLink]="['']">Go to home</button>
+
+    <button [routerLink]="['/list']" class="go-now">see all reviews</button>
+  </div>
+</div>
