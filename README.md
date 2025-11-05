@@ -1,6 +1,7 @@
-# MyProject
+# Simple Review App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.7.
+Small Angular app to create and view product reviews
+
 
 ## Development server
 
