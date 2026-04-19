@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Reviews } from '../models/review';
+import { Review } from '../models/review';
 
 @Component({
   selector: 'app-review-list',
@@ -12,7 +12,7 @@ import { Reviews } from '../models/review';
   styleUrl: './review-list.css',
 })
 export class ReviewList implements OnInit {
-  reviews: Reviews[] = [];
+  reviews: Review[] = [];
 
   ngOnInit(): void {
     const saved = localStorage.getItem('reviews');
@@ -21,7 +21,7 @@ export class ReviewList implements OnInit {
       : [];
   }
 
-  trackById(_i: number, r: Reviews) {
+  trackById(_i: number, r: Review) {
     return r.id;
   }
 }

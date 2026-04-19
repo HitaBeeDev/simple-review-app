@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Reviews } from '../models/review';
+import { Review } from '../models/review';
 
 @Component({
   selector: 'app-review-form',
@@ -19,12 +19,12 @@ export class ReviewForm implements OnInit {
   newProduct = '';
   newRecommend = false;
 
-  reviews: Reviews[] = [];
+  reviews: Review[] = [];
 
-  draftReview?: Reviews;
+  draftReview?: Review;
   isPreview = false;
   isSavedMessageVisible = false;
-  lastSubmittedReview?: Reviews;
+  lastSubmittedReview?: Review;
 
   constructor(private router: Router) {}
 
