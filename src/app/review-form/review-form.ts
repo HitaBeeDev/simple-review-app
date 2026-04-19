@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Reviews } from '../models/reviews';
+import { Reviews } from '../models/review';
 
 @Component({
   selector: 'app-review-form',

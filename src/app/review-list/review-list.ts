@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Reviews } from '../models/reviews';
+import { Reviews } from '../models/review';
 
 @Component({
   selector: 'app-review-list',
