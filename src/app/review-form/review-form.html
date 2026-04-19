@@ -1,124 +1,114 @@
-<div class="min-h-screen bg-slate-50 py-10 px-4">
-  <div class="max-w-lg mx-auto">
+<div class="min-h-screen bg-[#0e2a24] flex items-center justify-center py-10 px-4">
+  <div class="bg-[#f0f9f5] rounded-[0.6rem] p-8 w-full max-w-lg">
 
-    <!-- Page title -->
-    <h1 class="text-2xl font-bold text-slate-900 mb-1">Write a Review</h1>
-    <p class="text-sm text-slate-500 mb-8">Share your experience with a product or service.</p>
-
-    <!-- ── FORM + PREVIEW (hidden after success) ── -->
-    @if (step !== 'success') {
-
-      <!-- Form card -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <form [formGroup]="form" (ngSubmit)="preview()" novalidate>
-          <div class="space-y-5">
-
-            <!-- Author name -->
-            <app-input
-              formControlName="authorName"
-              label="Your name"
-              placeholder="Jane Doe"
-              [errorMessage]="err('authorName')"
-            />
-
-            <!-- Email -->
-            <app-input
-              formControlName="email"
-              label="Email"
-              placeholder="you@example.com"
-              [errorMessage]="err('email')"
-            />
-
-            <!-- Product -->
-            <app-input
-              formControlName="product"
-              label="Product"
-              placeholder="Product name"
-              [errorMessage]="err('product')"
-            />
-
-            <!-- Comment -->
-            <app-textarea
-              formControlName="comment"
-              label="Your review"
-              placeholder="Share your thoughts…"
-              [rows]="4"
-              [errorMessage]="err('comment')"
-            />
-
-            <!-- Rating -->
-            <div>
-              <div class="flex items-center gap-3 mb-1">
-                <span class="text-sm font-medium text-slate-700">Rating</span>
-                @if (f.rating.value && f.rating.value > 0) {
-                  <span class="text-xs text-slate-500">{{ f.rating.value }} out of 5</span>
-                }
-              </div>
-              <app-star-rating-input formControlName="rating" />
-              @if (err('rating')) {
-                <p class="text-xs text-red-500 mt-1">{{ err('rating') }}</p>
-              }
-            </div>
-
-            <!-- Recommend -->
-            <label class="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                formControlName="recommend"
-                class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <span class="text-sm text-slate-700">I would recommend this product</span>
-            </label>
-
-          </div>
-
-          <!-- Form action -->
-          <div class="mt-6 flex justify-end">
-            <button
-              type="submit"
-              class="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
-            >Preview Review</button>
-          </div>
-        </form>
+    <!-- Header -->
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <p class="text-[1.4rem] font-[500] text-[#163e34]">Write a Review</p>
+        <p class="text-[0.7rem] font-[300] text-[#1a4b3e]">Share your experience with a product or service.</p>
       </div>
+      <a
+        routerLink="/"
+        class="text-[0.7rem] font-[300] text-[#369376] border border-[#daf1e6] rounded-[0.3rem] px-3 h-[2rem] flex items-center justify-center hover:bg-[#daf1e6] transition-colors shrink-0 ml-4"
+      >← Home</a>
+    </div>
 
-      <!-- Preview card -->
+    @if (step !== 'success') {
+      <form [formGroup]="form" (ngSubmit)="preview()" novalidate>
+        <div class="space-y-5">
+
+          <app-input
+            formControlName="authorName"
+            label="Your name"
+            placeholder="Jane Doe"
+            [errorMessage]="err('authorName')"
+          />
+
+          <app-input
+            formControlName="email"
+            label="Email"
+            placeholder="you@example.com"
+            [errorMessage]="err('email')"
+          />
+
+          <app-input
+            formControlName="product"
+            label="Product"
+            placeholder="Product name"
+            [errorMessage]="err('product')"
+          />
+
+          <app-textarea
+            formControlName="comment"
+            label="Your review"
+            placeholder="Share your thoughts…"
+            [rows]="4"
+            [errorMessage]="err('comment')"
+          />
+
+          <!-- Rating -->
+          <div>
+            <p class="text-[0.75rem] font-[400] text-[#163e34] mb-1">Rating</p>
+            <app-star-rating-input formControlName="rating" />
+            @if (err('rating')) {
+              <p class="text-xs text-red-500 mt-1">{{ err('rating') }}</p>
+            }
+          </div>
+
+          <!-- Recommend -->
+          <label class="flex items-center gap-2.5 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              formControlName="recommend"
+              class="h-4 w-4 rounded border-[#daf1e6] accent-[#1a4b3e]"
+            />
+            <span class="text-[0.75rem] font-[300] text-[#163e34]">I would recommend this product</span>
+          </label>
+
+        </div>
+
+        <div class="mt-6 flex justify-end">
+          <button
+            type="submit"
+            class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-5 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
+          >Preview Review</button>
+        </div>
+      </form>
+
       @if (step === 'preview' && draftReview) {
-        <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50/60 p-5">
-          <p class="text-sm font-semibold text-amber-800 mb-3">This is how your review will appear</p>
+        <div class="mt-6 rounded-[0.55rem] border border-[#daf1e6] bg-white p-5">
+          <p class="text-[0.7rem] font-[400] text-[#26755e] mb-3">Preview — this is how your review will appear</p>
           <app-review-card [review]="draftReview" />
           <div class="mt-4 flex justify-end gap-3">
             <button
               type="button"
               (click)="edit()"
-              class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 hover:bg-slate-50 text-slate-700 transition-colors"
+              class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#c5e9d5] transition-colors"
             >Edit</button>
             <button
               type="button"
               (click)="confirm()"
-              class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
+              class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
             >Confirm &amp; Submit</button>
           </div>
         </div>
       }
-
     }
 
-    <!-- ── SUCCESS STATE ── -->
+    <!-- Success state -->
     @if (step === 'success') {
-      <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-center">
-        <ng-icon name="lucideCircleCheckBig" class="text-emerald-500 mx-auto mb-3" size="40" />
-        <h2 class="text-lg font-semibold text-emerald-800">Review submitted!</h2>
-        <p class="text-sm text-emerald-600 mt-1 mb-5">Thank you — your review has been saved.</p>
+      <div class="rounded-[0.55rem] border border-[#daf1e6] bg-white p-6 text-center">
+        <p class="text-[1.2rem] font-[500] text-[#163e34] mb-1">Review submitted!</p>
+        <p class="text-[0.7rem] font-[300] text-[#1a4b3e] mb-5">Thank you — your review has been saved.</p>
         <div class="flex items-center justify-center gap-3">
           <button
             type="button"
             (click)="writeAnother()"
-            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 hover:bg-slate-50 text-slate-700 transition-colors"
+            class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#c5e9d5] transition-colors"
           >Write Another</button>
           <a
             routerLink="/list"
-            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
+            class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
           >See All Reviews</a>
         </div>
       </div>

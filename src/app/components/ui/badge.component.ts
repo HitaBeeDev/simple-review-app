@@ -3,23 +3,22 @@ import { Component, Input } from '@angular/core';
 type BadgeVariant = 'success' | 'danger' | 'neutral';
 
 const VARIANT_CLASSES: Record<BadgeVariant, string> = {
-  success: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-  danger: 'bg-red-50 text-red-600 border border-red-200',
-  neutral: 'bg-slate-100 text-slate-600',
+  success: 'text-emerald-700',
+  danger: 'bg-[#fce9e7] border-[#fce9e7] text-[#91202e]',
+  neutral: 'text-slate-600',
 };
 
 const VARIANT_LABELS: Record<BadgeVariant, string> = {
-  success: 'Recommends',
-  danger: "Doesn't Recommend",
+  success: 'Recommended',
+  danger: "Doesn't Recommended",
   neutral: '',
 };
 
 @Component({
   selector: 'app-badge',
   standalone: true,
-  template: `
-    <span [class]="classes">{{ label }}</span>
-  `,
+  host: { class: 'inline-flex items-center' },
+  template: ` <span [class]="classes">{{ label }}</span> `,
 })
 export class BadgeComponent {
   @Input() variant: BadgeVariant = 'neutral';
@@ -30,6 +29,6 @@ export class BadgeComponent {
   }
 
   get classes(): string {
-    return `inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${VARIANT_CLASSES[this.variant]}`;
+    return `text-[0.6rem] font-[400] pb-1 pt-1 pl-2 pr-2 rounded-[0.3rem] bg-[#daf1e6] border border-[#daf1e6] ${VARIANT_CLASSES[this.variant]}`;
   }
 }

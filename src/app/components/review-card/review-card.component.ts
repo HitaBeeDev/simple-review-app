@@ -9,24 +9,26 @@ import { BadgeComponent } from '../ui/badge.component';
   standalone: true,
   imports: [StarRatingComponent, BadgeComponent, DatePipe],
   template: `
-    <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div class="bg-white rounded-[0.55rem] border border-[#daf1e6] p-5">
+      <div class="flex flex-row items-center justify-between">
+        <p class="text-[#369376] text-[0.55rem] font-[300]">{{ review.authorName }}</p>
 
-      <!-- Top row: author + stars -->
-      <div class="flex items-center justify-between">
-        <span class="text-sm font-semibold text-slate-900">{{ review.authorName }}</span>
-        <app-star-rating [rating]="review.rating" />
+        <p class="text-[#26755e] text-[0.75rem] font-[500]">{{ review.product }}</p>
       </div>
 
-      <!-- Comment -->
-      <p class="text-sm text-slate-600 italic leading-relaxed mt-1">"{{ review.comment }}"</p>
+      <p class="text-[#0e2a24] text-[0.85rem] font-[300] mt-3">{{ review.comment }}</p>
 
-      <!-- Bottom row: product, badge, date -->
-      <div class="flex items-center gap-2 mt-3 flex-wrap">
-        <span class="text-xs text-slate-500">{{ review.product }}</span>
-        <app-badge [variant]="review.recommend ? 'success' : 'danger'" />
-        <span class="text-xs text-slate-400 ml-auto">{{ review.createdAt | date:'mediumDate' }}</span>
+      <div class="flex flex-row items-center justify-between mt-5">
+        <div class="flex flex-row items-center">
+          <app-badge [variant]="review.recommend ? 'success' : 'danger'" />
+
+          <p class="text-[#89ccb3] text-[0.55rem] font-[200] ml-1">
+            {{ review.createdAt | date: 'mediumDate' }}
+          </p>
+        </div>
+
+        <div><app-star-rating [rating]="review.rating" /></div>
       </div>
-
     </div>
   `,
 })

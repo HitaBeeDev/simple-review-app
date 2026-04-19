@@ -1,31 +1,29 @@
-<div class="min-h-screen bg-slate-50">
+<div class="h-screen overflow-hidden bg-[#0e2a24] flex flex-col justify-center items-center">
+  <div class="bg-[#f0f9f5] rounded-[0.6rem] p-8 min-w-[50%] max-w-[80%]">
+    <div class="flex flex-col justify-center items-start">
+      <p class="text-[1.8rem] font-[500] text-[#163e34]">Share your experience</p>
 
-  <!-- Hero -->
-  <section class="pt-20 pb-12 px-4 text-center">
-    <ng-icon name="lucideStar" class="text-amber-400 mx-auto mb-4" size="40" />
-    <h1 class="text-4xl font-bold text-slate-900 tracking-tight">ReviewApp</h1>
-    <p class="text-slate-500 text-base mt-2 mb-8">Honest reviews, beautifully organized.</p>
+      <p class="text-[0.7rem] font-[300] text-[#1a4b3e]">
+        Tell us about your experience to help others make informed decisions.
+      </p>
+    </div>
 
-    <div class="flex items-center justify-center gap-3">
+    <div class="flex flex-row items-center justify-center gap-3 mt-8">
       <a
         routerLink="/new"
-        class="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
-      >Write a Review</a>
+        class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] w-full h-[2.3rem] flex items-center justify-center max-w-[15rem]"
+      >Create a review</a>
+
       <a
         routerLink="/list"
-        class="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors"
-      >Browse Reviews</a>
+        class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] w-full h-[2.3rem] flex items-center justify-center max-w-[15rem]"
+      >View all reviews</a>
     </div>
-  </section>
 
-  <!-- Sample cards -->
-  <section class="max-w-3xl mx-auto px-4 pb-16">
-    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Featured Reviews</p>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-3 mt-8">
       @for (review of sampleReviews; track review.id) {
         <app-review-card [review]="review" />
       }
     </div>
-  </section>
-
+  </div>
 </div>

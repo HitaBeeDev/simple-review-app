@@ -1,13 +1,9 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideStar } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-star-rating-input',
   standalone: true,
-  imports: [NgIcon],
-  viewProviders: [provideIcons({ lucideStar })],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,43 +12,50 @@ import { lucideStar } from '@ng-icons/lucide';
     },
   ],
   template: `
-    <div class="flex items-center gap-1">
-      @for (star of stars; track $index) {
-        <button
-          type="button"
-          (click)="select($index + 1)"
-          (mouseenter)="hovered = $index + 1"
-          (mouseleave)="hovered = 0"
-          class="hover:scale-110 transition-transform focus:outline-none"
-          [disabled]="isDisabled"
-        >
-          <ng-icon
-            name="lucideStar"
-            size="20"
-            [class]="getStarClass($index + 1)"
-          />
-        </button>
-      }
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        (click)="decrement()"
+        [disabled]="isDisabled || value <= 0"
+        class="w-8 h-8 rounded-full border border-[#daf1e6] bg-white text-[#1a4b3e] text-lg flex items-center justify-center hover:bg-[#daf1e6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors select-none"
+      >−</button>
+
+      <div class="flex flex-col items-center min-w-[4rem]">
+        <span class="text-[1.6rem] font-[500] text-[#d97a2b] leading-none">{{ display }}</span>
+        <span class="text-[0.6rem] font-[300] text-slate-300 mt-0.5">out of 5</span>
+      </div>
+
+      <button
+        type="button"
+        (click)="increment()"
+        [disabled]="isDisabled || value >= 5"
+        class="w-8 h-8 rounded-full border border-[#daf1e6] bg-white text-[#1a4b3e] text-lg flex items-center justify-center hover:bg-[#daf1e6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors select-none"
+      >+</button>
     </div>
   `,
 })
 export class StarRatingInputComponent implements ControlValueAccessor {
-  stars = [0, 1, 2, 3, 4];
   value = 0;
-  hovered = 0;
   isDisabled = false;
 
   onChange: (v: number) => void = () => {};
   onTouched: () => void = () => {};
 
-  getStarClass(index: number): string {
-    const active = this.hovered || this.value;
-    return index <= active ? 'text-amber-400' : 'text-slate-300';
+  get display(): string {
+    return this.value % 1 === 0 ? `${this.value}.0` : `${this.value}`;
   }
 
-  select(index: number): void {
-    this.value = index;
-    this.onChange(index);
+  increment(): void {
+    if (this.value >= 5) return;
+    this.value = Math.round((this.value + 0.5) * 10) / 10;
+    this.onChange(this.value);
+    this.onTouched();
+  }
+
+  decrement(): void {
+    if (this.value <= 0) return;
+    this.value = Math.round((this.value - 0.5) * 10) / 10;
+    this.onChange(this.value);
     this.onTouched();
   }
 
