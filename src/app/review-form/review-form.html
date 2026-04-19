@@ -1,198 +1,128 @@
-<div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
-  <div class="mx-auto w-full max-w-2xl">
-    <!-- Header -->
-    <div class="mb-6 flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-gray-800">Create a Review</h1>
-      <button
-        [routerLink]="['']"
-        class="rounded-xl bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-      >
-        Home
-      </button>
-    </div>
+<div class="min-h-screen bg-slate-50 py-10 px-4">
+  <div class="max-w-lg mx-auto">
 
-    <!-- Form Card -->
-    <div class="rounded-2xl border border-gray-200 bg-white/80 p-6 shadow-md backdrop-blur">
-      <div class="grid grid-cols-1 gap-4">
-        <!-- Author -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-center">
-          <label class="text-sm font-medium text-gray-700">Author Name</label>
-          <input
-            class="md:col-span-3 w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Jane Doe"
-            [(ngModel)]="newAuthorName"
-          />
-        </div>
+    <!-- Page title -->
+    <h1 class="text-2xl font-bold text-slate-900 mb-1">Write a Review</h1>
+    <p class="text-sm text-slate-500 mb-8">Share your experience with a product or service.</p>
 
-        <!-- Comment -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-start">
-          <label class="text-sm font-medium text-gray-700">Review comment</label>
-          <textarea
-            class="md:col-span-3 w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Share your thoughts…"
-            rows="3"
-            [(ngModel)]="newComment"
-          ></textarea>
-        </div>
+    <!-- ── FORM + PREVIEW (hidden after success) ── -->
+    @if (step !== 'success') {
 
-        <!-- Rating -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-center">
-          <label class="text-sm font-medium text-gray-700">Rating</label>
-          <div class="md:col-span-3 flex items-center gap-3">
-            <input
-              class="w-28 rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-              type="number"
-              min="1"
-              max="5"
-              step="1"
-              placeholder="1–5"
-              [(ngModel)]="newRating"
+      <!-- Form card -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <form [formGroup]="form" (ngSubmit)="preview()" novalidate>
+          <div class="space-y-5">
+
+            <!-- Author name -->
+            <app-input
+              formControlName="authorName"
+              label="Your name"
+              placeholder="Jane Doe"
+              [errorMessage]="err('authorName')"
             />
-            <span class="text-sm text-gray-500">1 = poor · 5 = excellent</span>
+
+            <!-- Email -->
+            <app-input
+              formControlName="email"
+              label="Email"
+              placeholder="you@example.com"
+              [errorMessage]="err('email')"
+            />
+
+            <!-- Product -->
+            <app-input
+              formControlName="product"
+              label="Product"
+              placeholder="Product name"
+              [errorMessage]="err('product')"
+            />
+
+            <!-- Comment -->
+            <app-textarea
+              formControlName="comment"
+              label="Your review"
+              placeholder="Share your thoughts…"
+              [rows]="4"
+              [errorMessage]="err('comment')"
+            />
+
+            <!-- Rating -->
+            <div>
+              <div class="flex items-center gap-3 mb-1">
+                <span class="text-sm font-medium text-slate-700">Rating</span>
+                @if (f.rating.value && f.rating.value > 0) {
+                  <span class="text-xs text-slate-500">{{ f.rating.value }} out of 5</span>
+                }
+              </div>
+              <app-star-rating-input formControlName="rating" />
+              @if (err('rating')) {
+                <p class="text-xs text-red-500 mt-1">{{ err('rating') }}</p>
+              }
+            </div>
+
+            <!-- Recommend -->
+            <label class="flex items-center gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                formControlName="recommend"
+                class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span class="text-sm text-slate-700">I would recommend this product</span>
+            </label>
+
+          </div>
+
+          <!-- Form action -->
+          <div class="mt-6 flex justify-end">
+            <button
+              type="submit"
+              class="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
+            >Preview Review</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Preview card -->
+      @if (step === 'preview' && draftReview) {
+        <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50/60 p-5">
+          <p class="text-sm font-semibold text-amber-800 mb-3">This is how your review will appear</p>
+          <app-review-card [review]="draftReview" />
+          <div class="mt-4 flex justify-end gap-3">
+            <button
+              type="button"
+              (click)="edit()"
+              class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 hover:bg-slate-50 text-slate-700 transition-colors"
+            >Edit</button>
+            <button
+              type="button"
+              (click)="confirm()"
+              class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
+            >Confirm &amp; Submit</button>
           </div>
         </div>
+      }
 
-        <!-- Email -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-center">
-          <label class="text-sm font-medium text-gray-700">Mail</label>
-          <input
-            class="md:col-span-3 w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-            type="email"
-            placeholder="you@example.com"
-            [(ngModel)]="newEmail"
-          />
-        </div>
+    }
 
-        <!-- Product -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-center">
-          <label class="text-sm font-medium text-gray-700">Product</label>
-          <input
-            class="md:col-span-3 w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Product name"
-            [(ngModel)]="newProduct"
-          />
-        </div>
-
-        <!-- Recommend -->
-        <div class="grid gap-2 md:grid-cols-4 md:items-center">
-          <label class="text-sm font-medium text-gray-700">Would recommend?</label>
-          <label class="md:col-span-3 inline-flex cursor-pointer items-center gap-2">
-            <input
-              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500"
-              type="checkbox"
-              name="recommend"
-              [(ngModel)]="newRecommend"
-            />
-            <span class="text-sm text-gray-700">Yes, I recommend this product</span>
-          </label>
-        </div>
-
-        <!-- Actions -->
-        <div class="mt-2 flex items-center justify-end gap-3">
+    <!-- ── SUCCESS STATE ── -->
+    @if (step === 'success') {
+      <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-center">
+        <ng-icon name="lucideCircleCheckBig" class="text-emerald-500 mx-auto mb-3" size="40" />
+        <h2 class="text-lg font-semibold text-emerald-800">Review submitted!</h2>
+        <p class="text-sm text-emerald-600 mt-1 mb-5">Thank you — your review has been saved.</p>
+        <div class="flex items-center justify-center gap-3">
           <button
-            class="rounded-xl bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
             type="button"
-            (click)="submitReview()"
-          >
-            Preview
-          </button>
+            (click)="writeAnother()"
+            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 hover:bg-slate-50 text-slate-700 transition-colors"
+          >Write Another</button>
+          <a
+            routerLink="/list"
+            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-indigo-500 hover:bg-indigo-600 text-white transition-colors"
+          >See All Reviews</a>
         </div>
       </div>
-    </div>
+    }
 
-    <!-- Preview -->
-    <div
-      *ngIf="isPreview && draftReview"
-      class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-6 shadow-sm"
-    >
-      <h2 class="mb-3 text-lg font-semibold text-amber-900">
-        Your comment will be shown like this
-      </h2>
-      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow">
-        <p class="text-lg font-semibold text-gray-900 mb-1">{{ draftReview.authorName }}</p>
-        <p class="text-gray-700 mb-2 italic">"{{ draftReview.comment }}"</p>
-        <div class="text-sm text-gray-600 space-y-1">
-          <p><span class="font-medium">Rating:</span> {{ draftReview.rating }}/5</p>
-          <p><span class="font-medium">Email:</span> {{ draftReview.email }}</p>
-          <p><span class="font-medium">Product:</span> {{ draftReview.product }}</p>
-          <p>
-            <span class="font-medium">Recommend:</span>
-            <span
-              [class.text-green-600]="draftReview.recommend"
-              [class.text-red-500]="!draftReview.recommend"
-            >
-              {{ draftReview.recommend ? 'Yes' : 'No' }}
-            </span>
-          </p>
-          <p>
-            <span class="font-medium">Submitted at:</span>
-            {{ draftReview.createdAt | date : 'medium' }}
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-4 flex items-center justify-end gap-3">
-        <button
-          class="rounded-xl border border-red-300 bg-white px-4 py-2 text-red-600 transition hover:bg-red-50"
-          (click)="deleteDraft()"
-        >
-          Delete
-        </button>
-        <button
-          class="rounded-xl bg-emerald-600 px-4 py-2 text-white transition hover:bg-emerald-700"
-          (click)="confirmDraft()"
-        >
-          Confirm
-        </button>
-      </div>
-    </div>
-
-    <!-- Saved -->
-    <div
-      *ngIf="isSavedMessageVisible && lastSubmittedReview"
-      class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm"
-    >
-      <p class="mb-3 text-emerald-800 font-semibold">✅ Your comment was saved.</p>
-
-      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow">
-        <p class="text-lg font-semibold text-gray-900 mb-1">{{ lastSubmittedReview.authorName }}</p>
-        <p class="text-gray-700 mb-2 italic">"{{ lastSubmittedReview.comment }}"</p>
-        <div class="text-sm text-gray-600 space-y-1">
-          <p><span class="font-medium">Rating:</span> {{ lastSubmittedReview.rating }}/5</p>
-          <p><span class="font-medium">Email:</span> {{ lastSubmittedReview.email }}</p>
-          <p><span class="font-medium">Product:</span> {{ lastSubmittedReview.product }}</p>
-          <p>
-            <span class="font-medium">Recommend:</span>
-            <span
-              [class.text-green-600]="lastSubmittedReview.recommend"
-              [class.text-red-500]="!lastSubmittedReview.recommend"
-            >
-              {{ lastSubmittedReview.recommend ? 'Yes' : 'No' }}
-            </span>
-          </p>
-          <p>
-            <span class="font-medium">Submitted at:</span>
-            {{ lastSubmittedReview.createdAt | date : 'medium' }}
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-4 flex items-center justify-end gap-3">
-        <button
-          [routerLink]="['']"
-          class="rounded-xl border border-gray-300 bg-white px-4 py-2 text-gray-800 transition hover:bg-gray-50"
-        >
-          Go to home
-        </button>
-        <button
-          [routerLink]="['/list']"
-          class="rounded-xl bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-        >
-          See all reviews
-        </button>
-      </div>
-    </div>
   </div>
 </div>

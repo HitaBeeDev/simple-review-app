@@ -1,83 +1,93 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { lucideCircleCheckBig } from '@ng-icons/lucide';
 import { Review } from '../models/review';
+import { ReviewService } from '../services/review.service';
+import { InputComponent } from '../components/ui/input.component';
+import { TextareaComponent } from '../components/ui/textarea.component';
+import { StarRatingInputComponent } from '../components/ui/star-rating-input.component';
+import { ReviewCardComponent } from '../components/review-card/review-card.component';
+
+type Step = 'form' | 'preview' | 'success';
 
 @Component({
   selector: 'app-review-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    NgIconComponent,
+    InputComponent,
+    TextareaComponent,
+    StarRatingInputComponent,
+    ReviewCardComponent,
+  ],
+  viewProviders: [provideIcons({ lucideCircleCheckBig })],
   templateUrl: './review-form.html',
   styleUrl: './review-form.css',
 })
-export class ReviewForm implements OnInit {
-  newAuthorName = '';
-  newComment = '';
-  newRating = 0;
-  newEmail = '';
-  newProduct = '';
-  newRecommend = false;
+export class ReviewForm {
+  private fb = inject(FormBuilder);
+  private reviewService = inject(ReviewService);
 
-  reviews: Review[] = [];
-
+  step: Step = 'form';
   draftReview?: Review;
-  isPreview = false;
-  isSavedMessageVisible = false;
-  lastSubmittedReview?: Review;
 
-  constructor(private router: Router) {}
+  form = this.fb.group({
+    authorName: ['', Validators.required],
+    comment: ['', [Validators.required, Validators.minLength(10)]],
+    rating: [0, [Validators.required, Validators.min(1)]],
+    email: ['', [Validators.required, Validators.email]],
+    product: ['', Validators.required],
+    recommend: [false],
+  });
 
-  ngOnInit(): void {
-    const saved = localStorage.getItem('reviews');
-    this.reviews = saved ? JSON.parse(saved) : [];
+  get f() { return this.form.controls; }
+
+  err(field: keyof typeof this.form.controls): string {
+    const c = this.form.get(field);
+    if (!c || !c.touched || c.valid) return '';
+    if (c.hasError('required')) return 'This field is required.';
+    if (c.hasError('minlength')) return `Must be at least ${c.errors?.['minlength'].requiredLength} characters.`;
+    if (c.hasError('email')) return 'Enter a valid email address.';
+    if (c.hasError('min')) return 'Please select a rating.';
+    return 'Invalid value.';
   }
 
-  submitReview() {
-    if (
-      this.newAuthorName.trim() &&
-      this.newComment.trim() &&
-      this.newRating > 0 &&
-      this.newEmail.trim() &&
-      this.newProduct.trim()
-    ) {
-      this.draftReview = {
-        id: Date.now(),
-        authorName: this.newAuthorName,
-        comment: this.newComment,
-        rating: this.newRating,
-        email: this.newEmail,
-        product: this.newProduct,
-        recommend: this.newRecommend,
-        createdAt: new Date(),
-      };
-      this.isPreview = true;
-      this.isSavedMessageVisible = false;
+  preview(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+    const v = this.form.getRawValue();
+    this.draftReview = {
+      id: Date.now(),
+      authorName: v.authorName!,
+      comment: v.comment!,
+      rating: v.rating!,
+      email: v.email!,
+      product: v.product!,
+      recommend: v.recommend!,
+      createdAt: new Date(),
+    };
+    this.step = 'preview';
   }
 
-  deleteDraft() {
-    this.isPreview = false;
-    this.draftReview = undefined;
+  edit(): void {
+    this.step = 'form';
   }
 
-  confirmDraft() {
+  confirm(): void {
     if (!this.draftReview) return;
-
-    this.reviews.push(this.draftReview);
-    this.lastSubmittedReview = this.draftReview;
-
-    localStorage.setItem('reviews', JSON.stringify(this.reviews));
-
-    this.isPreview = false;
-    this.draftReview = undefined;
-
-    this.isSavedMessageVisible = true;
+    this.reviewService.addReview(this.draftReview);
+    this.step = 'success';
   }
 
-  goHomeNow() {
-    this.isSavedMessageVisible = false;
-    this.lastSubmittedReview = undefined;
-    this.router.navigate(['/']);
+  writeAnother(): void {
+    this.form.reset({ rating: 0, recommend: false });
+    this.draftReview = undefined;
+    this.step = 'form';
   }
 }

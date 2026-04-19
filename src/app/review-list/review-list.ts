@@ -1,27 +1,19 @@
-// review-list.component.ts
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Review } from '../models/review';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { lucideStar } from '@ng-icons/lucide';
+import { ReviewService } from '../services/review.service';
+import { ReviewCardComponent } from '../components/review-card/review-card.component';
 
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, NgIconComponent, ReviewCardComponent],
+  viewProviders: [provideIcons({ lucideStar })],
   templateUrl: './review-list.html',
   styleUrl: './review-list.css',
 })
-export class ReviewList implements OnInit {
-  reviews: Review[] = [];
-
-  ngOnInit(): void {
-    const saved = localStorage.getItem('reviews');
-    this.reviews = saved
-      ? JSON.parse(saved).map((r: any) => ({ ...r, createdAt: new Date(r.createdAt) }))
-      : [];
-  }
-
-  trackById(_i: number, r: Review) {
-    return r.id;
-  }
+export class ReviewList {
+  private reviewService = inject(ReviewService);
+  reviews = this.reviewService.reviews;
 }
