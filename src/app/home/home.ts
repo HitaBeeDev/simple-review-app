@@ -1,50 +1,49 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-type Card = {
-  id: number;
-  name: string;
-  review: string;
-  product: string;
-  rate: number;
-  role: string;
-};
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { lucideStar } from '@ng-icons/lucide';
+import { ReviewCardComponent } from '../components/review-card/review-card.component';
+import { Review } from '../models/review';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, NgIconComponent, ReviewCardComponent],
+  viewProviders: [provideIcons({ lucideStar })],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
 export class Home {
-  cards: Card[] = [
+  sampleReviews: Review[] = [
     {
       id: 1,
-      name: 'Alice Johnson',
-      review: 'Amazing app! The UI is clean and intuitive.',
+      authorName: 'Alice Johnson',
+      comment: 'Amazing app! The UI is clean and intuitive. Highly recommend it to any team.',
       product: 'ReviewPro App',
-      rate: 5,
-      role: 'Designer',
+      rating: 5,
+      email: 'alice@example.com',
+      recommend: true,
+      createdAt: new Date('2024-11-15'),
     },
     {
       id: 2,
-      name: 'Mark Evans',
-      review: 'Very useful and easy to navigate.',
+      authorName: 'Mark Evans',
+      comment: 'Very useful and easy to navigate. Saved our team hours every week.',
       product: 'TaskTracker',
-      rate: 4,
-      role: 'Developer',
+      rating: 4,
+      email: 'mark@example.com',
+      recommend: true,
+      createdAt: new Date('2025-01-08'),
     },
     {
       id: 3,
-      name: 'Mark Evans',
-      review: 'Very useful and easy to navigate.',
-      product: 'TaskTracker',
-      rate: 4,
-      role: 'Developer',
+      authorName: 'Sara Kim',
+      comment: 'Good overall but the onboarding could be smoother for new users.',
+      product: 'Onboardly',
+      rating: 3,
+      email: 'sara@example.com',
+      recommend: false,
+      createdAt: new Date('2025-03-22'),
     },
   ];
-
-  selectedIndex: number | null = null;
 }

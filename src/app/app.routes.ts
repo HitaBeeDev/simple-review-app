@@ -5,6 +5,7 @@ import { Home } from './home/home';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  { path: 'list', component: ReviewList },
   { path: 'new', component: ReviewForm },
+  { path: 'list', component: ReviewList },
+  { path: '**', redirectTo: '' },
 ];
