@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideCircleCheckBig } from '@ng-icons/lucide';
 import { Review } from '../models/review';
 import { ReviewService } from '../services/review.service';
 import { InputComponent } from '../components/ui/input.component';
@@ -18,13 +16,11 @@ type Step = 'form' | 'preview' | 'success';
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    NgIconComponent,
     InputComponent,
     TextareaComponent,
     StarRatingInputComponent,
     ReviewCardComponent,
   ],
-  viewProviders: [provideIcons({ lucideCircleCheckBig })],
   templateUrl: './review-form.html',
   styleUrl: './review-form.css',
 })

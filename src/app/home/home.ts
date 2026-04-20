@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideStar } from '@ng-icons/lucide';
 import { ReviewCardComponent } from '../components/review-card/review-card.component';
 import { Review } from '../models/review';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, NgIconComponent, ReviewCardComponent],
-  viewProviders: [provideIcons({ lucideStar })],
+  imports: [RouterLink, ReviewCardComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
