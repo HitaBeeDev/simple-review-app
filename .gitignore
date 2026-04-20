@@ -42,6 +42,9 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
+# Claude Code
+.claude/
+
 # Project planning docs
 PROJECT_OVERVIEW.md
 PROJECT_CHECKLIST.md
