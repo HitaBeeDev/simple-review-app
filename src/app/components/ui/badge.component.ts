@@ -10,7 +10,7 @@ const VARIANT_CLASSES: Record<BadgeVariant, string> = {
 
 const VARIANT_LABELS: Record<BadgeVariant, string> = {
   success: 'Recommended',
-  danger: "Doesn't Recommended",
+  danger: "Doesn't Recommend",
   neutral: '',
 };
 

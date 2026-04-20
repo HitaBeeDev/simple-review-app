@@ -12,21 +12,23 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
   template: `
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3" role="group" aria-label="Rating">
       <button
         type="button"
+        aria-label="Decrease rating"
         (click)="decrement()"
         [disabled]="isDisabled || value <= 0"
         class="w-8 h-8 rounded-full border border-[#daf1e6] bg-white text-[#1a4b3e] text-lg flex items-center justify-center hover:bg-[#daf1e6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors select-none"
       >−</button>
 
-      <div class="flex flex-col items-center min-w-[4rem]">
-        <span class="text-[1.6rem] font-[500] text-[#d97a2b] leading-none">{{ display }}</span>
-        <span class="text-[0.6rem] font-[300] text-slate-300 mt-0.5">out of 5</span>
+      <div class="flex flex-col items-center min-w-[4rem]" aria-live="polite" aria-atomic="true">
+        <span class="text-[1.6rem] font-[500] text-[#d97a2b] leading-none" [attr.aria-label]="display + ' out of 5'">{{ display }}</span>
+        <span class="text-[0.6rem] font-[300] text-[#89ccb3] mt-0.5" aria-hidden="true">out of 5</span>
       </div>
 
       <button
         type="button"
+        aria-label="Increase rating"
         (click)="increment()"
         [disabled]="isDisabled || value >= 5"
         class="w-8 h-8 rounded-full border border-[#daf1e6] bg-white text-[#1a4b3e] text-lg flex items-center justify-center hover:bg-[#daf1e6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors select-none"

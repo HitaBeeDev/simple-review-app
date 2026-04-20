@@ -1,6 +1,8 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
+let nextId = 0;
+
 @Component({
   selector: 'app-input',
   standalone: true,
@@ -15,9 +17,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
   ],
   template: `
     @if (label) {
-      <label class="block text-[0.75rem] font-[400] text-[#163e34] mb-1">{{ label }}</label>
+      <label [for]="uid" class="block text-[0.75rem] font-[400] text-[#163e34] mb-1">{{ label }}</label>
     }
     <input
+      [id]="uid"
       [placeholder]="placeholder"
       [value]="value"
       [disabled]="isDisabled"
@@ -31,6 +34,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
   `,
 })
 export class InputComponent implements ControlValueAccessor {
+  readonly uid = `input-${++nextId}`;
   @Input() label = '';
   @Input() errorMessage = '';
   @Input() placeholder = '';

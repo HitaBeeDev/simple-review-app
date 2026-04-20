@@ -1,6 +1,8 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+let nextId = 0;
+
 @Component({
   selector: 'app-textarea',
   standalone: true,
@@ -14,9 +16,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   template: `
     @if (label) {
-      <label class="block text-[0.75rem] font-[400] text-[#163e34] mb-1">{{ label }}</label>
+      <label [for]="uid" class="block text-[0.75rem] font-[400] text-[#163e34] mb-1">{{ label }}</label>
     }
     <textarea
+      [id]="uid"
       [placeholder]="placeholder"
       [rows]="rows"
       [disabled]="isDisabled"
@@ -30,6 +33,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   `,
 })
 export class TextareaComponent implements ControlValueAccessor {
+  readonly uid = `textarea-${++nextId}`;
   @Input() label = '';
   @Input() errorMessage = '';
   @Input() placeholder = '';
