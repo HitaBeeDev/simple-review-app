@@ -1,1 +1,1 @@
-(window as any).__Zone_disable_unload = true;
+(window as any).__zone_symbol__UNPATCHED_EVENTS = ['unload', 'beforeunload'];
