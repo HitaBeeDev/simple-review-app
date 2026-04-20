@@ -1,29 +1,31 @@
-<div class="h-screen overflow-hidden bg-[#0e2a24] flex flex-col justify-center items-center">
-  <div class="bg-[#f0f9f5] rounded-[0.6rem] p-8 min-w-[50%] max-w-[80%]">
-    <div class="flex flex-col justify-center items-start">
-      <p class="text-[1.8rem] font-[500] text-[#163e34]">Share your experience</p>
+<div class="min-h-screen bg-[#0e2a24] px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+  <div class="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-7xl items-center justify-center sm:min-h-[calc(100vh-5rem)]">
+    <div class="w-full rounded-[0.6rem] bg-[#f0f9f5] p-5 sm:p-8 lg:p-10">
+      <div class="flex flex-col items-start justify-center">
+        <p class="text-[1.6rem] font-[500] text-[#163e34] sm:text-[1.8rem]">Share your experience</p>
 
-      <p class="text-[0.7rem] font-[300] text-[#1a4b3e]">
-        Tell us about your experience to help others make informed decisions.
-      </p>
-    </div>
+        <p class="max-w-2xl text-[0.8rem] font-[300] text-[#1a4b3e] sm:text-[0.85rem]">
+          Tell us about your experience to help others make informed decisions.
+        </p>
+      </div>
 
-    <div class="flex flex-row items-center justify-center gap-3 mt-8">
-      <a
-        routerLink="/new"
-        class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] w-full h-[2.3rem] flex items-center justify-center max-w-[15rem]"
-      >Create a review</a>
+      <div class="mt-6 flex flex-col items-stretch justify-center gap-3 sm:mt-8 sm:flex-row">
+        <a
+          routerLink="/new"
+          class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#1a4b3e] px-4 text-center text-[0.8rem] font-[300] text-[#f0f9f5] sm:h-[2.5rem] sm:max-w-[15rem]"
+        >Create a review</a>
 
-      <a
-        routerLink="/list"
-        class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] w-full h-[2.3rem] flex items-center justify-center max-w-[15rem]"
-      >View all reviews</a>
-    </div>
+        <a
+          routerLink="/list"
+          class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#daf1e6] px-4 text-center text-[0.8rem] font-[300] text-[#1a4b3e] sm:h-[2.5rem] sm:max-w-[15rem]"
+        >View all reviews</a>
+      </div>
 
-    <div class="grid grid-cols-3 gap-3 mt-8">
-      @for (review of sampleReviews; track review.id) {
-        <app-review-card [review]="review" />
-      }
+      <div class="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 xl:grid-cols-3">
+        @for (review of sampleReviews; track review.id) {
+          <app-review-card [review]="review" />
+        }
+      </div>
     </div>
   </div>
 </div>

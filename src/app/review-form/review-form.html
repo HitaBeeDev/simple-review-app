@@ -1,15 +1,15 @@
-<div class="min-h-screen bg-[#0e2a24] flex items-center justify-center py-10 px-4">
-  <div class="bg-[#f0f9f5] rounded-[0.6rem] p-8 w-full max-w-lg">
+<div class="min-h-screen bg-[#0e2a24] px-4 py-6 sm:px-6 sm:py-10">
+  <div class="mx-auto w-full max-w-2xl rounded-[0.6rem] bg-[#f0f9f5] p-5 sm:p-8">
 
     <!-- Header -->
-    <div class="flex items-start justify-between mb-6">
-      <div>
-        <p class="text-[1.4rem] font-[500] text-[#163e34]">Write a Review</p>
-        <p class="text-[0.7rem] font-[300] text-[#1a4b3e]">Share your experience with a product or service.</p>
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-[1.25rem] font-[500] text-[#163e34] sm:text-[1.4rem]">Write a Review</p>
+        <p class="text-[0.8rem] font-[300] text-[#1a4b3e]">Share your experience with a product or service.</p>
       </div>
       <a
         routerLink="/"
-        class="text-[0.7rem] font-[300] text-[#369376] border border-[#daf1e6] rounded-[0.3rem] px-3 h-[2rem] flex items-center justify-center hover:bg-[#daf1e6] transition-colors shrink-0 ml-4"
+        class="flex h-[2.4rem] w-full shrink-0 items-center justify-center rounded-[0.3rem] border border-[#daf1e6] px-3 text-[0.8rem] font-[300] text-[#369376] transition-colors hover:bg-[#daf1e6] sm:ml-4 sm:h-[2rem] sm:w-auto"
       >← Home</a>
     </div>
 
@@ -70,25 +70,25 @@
         <div class="mt-6 flex justify-end">
           <button
             type="submit"
-            class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-5 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
+            class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#1a4b3e] px-5 text-[0.8rem] font-[300] text-[#f0f9f5] transition-colors hover:bg-[#163e34] sm:h-[2.3rem] sm:w-auto"
           >Preview Review</button>
         </div>
       </form>
 
       @if (step === 'preview' && draftReview) {
-        <div class="mt-6 rounded-[0.55rem] border border-[#daf1e6] bg-white p-5">
-          <p class="text-[0.7rem] font-[400] text-[#26755e] mb-3">Preview — this is how your review will appear</p>
+        <div class="mt-6 rounded-[0.55rem] border border-[#daf1e6] bg-white p-4 sm:p-5">
+          <p class="mb-3 text-[0.75rem] font-[400] text-[#26755e]">Preview — this is how your review will appear</p>
           <app-review-card [review]="draftReview" />
-          <div class="mt-4 flex justify-end gap-3">
+          <div class="mt-4 flex flex-col justify-end gap-3 sm:flex-row">
             <button
               type="button"
               (click)="edit()"
-              class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#c5e9d5] transition-colors"
+              class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#daf1e6] px-4 text-[0.8rem] font-[300] text-[#1a4b3e] transition-colors hover:bg-[#c5e9d5] sm:h-[2.3rem] sm:w-auto"
             >Edit</button>
             <button
               type="button"
               (click)="confirm()"
-              class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
+              class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#1a4b3e] px-4 text-[0.8rem] font-[300] text-[#f0f9f5] transition-colors hover:bg-[#163e34] sm:h-[2.3rem] sm:w-auto"
             >Confirm &amp; Submit</button>
           </div>
         </div>
@@ -97,18 +97,18 @@
 
     <!-- Success state -->
     @if (step === 'success') {
-      <div class="rounded-[0.55rem] border border-[#daf1e6] bg-white p-6 text-center">
-        <p class="text-[1.2rem] font-[500] text-[#163e34] mb-1">Review submitted!</p>
-        <p class="text-[0.7rem] font-[300] text-[#1a4b3e] mb-5">Thank you — your review has been saved.</p>
-        <div class="flex items-center justify-center gap-3">
+      <div class="rounded-[0.55rem] border border-[#daf1e6] bg-white p-5 text-center sm:p-6">
+        <p class="mb-1 text-[1.1rem] font-[500] text-[#163e34] sm:text-[1.2rem]">Review submitted!</p>
+        <p class="mb-5 text-[0.8rem] font-[300] text-[#1a4b3e]">Thank you — your review has been saved.</p>
+        <div class="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <button
             type="button"
             (click)="writeAnother()"
-            class="bg-[#daf1e6] text-[#1a4b3e] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#c5e9d5] transition-colors"
+            class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#daf1e6] px-4 text-[0.8rem] font-[300] text-[#1a4b3e] transition-colors hover:bg-[#c5e9d5] sm:h-[2.3rem] sm:w-auto"
           >Write Another</button>
           <a
             routerLink="/list"
-            class="bg-[#1a4b3e] text-[#f0f9f5] rounded-[0.3rem] text-[0.75rem] font-[300] px-4 h-[2.3rem] flex items-center justify-center hover:bg-[#163e34] transition-colors"
+            class="flex h-[2.75rem] w-full items-center justify-center rounded-[0.3rem] bg-[#1a4b3e] px-4 text-[0.8rem] font-[300] text-[#f0f9f5] transition-colors hover:bg-[#163e34] sm:h-[2.3rem] sm:w-auto"
           >See All Reviews</a>
         </div>
       </div>
