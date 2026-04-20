@@ -2,6 +2,18 @@
 
 A small Angular app to write and browse product reviews. Built with Angular 20, Tailwind CSS v4, and Signals.
 
+<p align="center">
+  <img src="docs/assets/preview.png" alt="Simple Review App screenshot" width="800" />
+</p>
+
+## Performance
+
+| Metric | Score |
+|---|---|
+| Lighthouse Performance | 100 |
+| Accessibility | 91 |
+| SEO | 100 |
+
 ## Features
 
 - Browse reviews in a responsive grid
