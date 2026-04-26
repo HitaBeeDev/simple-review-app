@@ -10,8 +10,9 @@ A small Angular app to write and browse product reviews. Built with Angular 20, 
 
 | Metric | Score |
 |---|---|
-| Lighthouse Performance | 100 |
+| Performance | 100 |
 | Accessibility | 91 |
+| Best Practices | 100 |
 | SEO | 100 |
 
 ## Features
